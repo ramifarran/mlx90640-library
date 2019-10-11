@@ -10,6 +10,7 @@
 
 #define FPS 4
 #define FRAME_TIME_MICROS (1000000/FPS)
+#define OFFSET_MICROS 850
 
 int main(){
     int state = 0;
@@ -20,6 +21,8 @@ int main(){
     static float image[768];
     float eTa;
     static uint16_t data[768*sizeof(float)];
+    static long frame_time_micros = FRAME_TIME_MICROS;
+    auto frame_time = std::chrono::microseconds(frame_time_micros + OFFSET_MICROS);
 
     std::fstream fs;
 
@@ -41,6 +44,7 @@ int main(){
     int subpage;
     static float mlx90640To[768];
     while (1){
+        auto start = std::chrono::system_clock::now();
         state = !state;
         //printf("State: %d \n", state);
         MLX90640_GetFrameData(MLX_I2C_ADDR, frame);
