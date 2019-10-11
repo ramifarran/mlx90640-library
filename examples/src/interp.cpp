@@ -8,6 +8,9 @@
 
 #define MLX_I2C_ADDR 0x33
 
+#define FPS 4
+#define FRAME_TIME_MICROS (1000000/FPS)
+
 int main(){
     int state = 0;
     printf("Starting...\n");
@@ -50,7 +53,11 @@ int main(){
         MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
         //wite temperature array to stdout
-		fwrite(&mlx90640To, 1, sizeof(mlx90640To), stdout);
+        fwrite(&mlx90640To, 1, sizeof(mlx90640To), stdout);
+
+        auto end = std::chrono::system_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        std::this_thread::sleep_for(std::chrono::microseconds(frame_time - elapsed));
     }
     return 0;
 }
