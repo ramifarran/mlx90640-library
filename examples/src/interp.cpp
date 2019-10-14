@@ -57,8 +57,9 @@ int main(){
         MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
         int temp_in_ints[sizeof(mlx90640To)];
-        for(int x = 0; x < 32; x++){
+        for(int x = 0; x < 32; x++) {
             for(int y = 0; y < 24; y++){
+                printf(%+06.2d, mlx90640To[32 * (23-y) + x]);
                 temp_in_ints[32 * (23-y) + x] = (int)mlx90640To[32 * (23-y) + x];
             }
         }
