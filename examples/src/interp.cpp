@@ -60,7 +60,7 @@ int main(){
         printf("Subpage: %d\n", subpage);
         for(int x = 0; x < 32; x++) {
             for(int y = 0; y < 24; y++){
-                temp_in_ints[32 * (23-y) + x] = (int)min(mlx90640To[32 * (23-y) + x], 99.99);
+                temp_in_ints[32 * (23-y) + x] = (int)std::min(mlx90640To[32 * (23-y) + x], 99.99);
                 printf("%+06d", temp_in_ints[32 * (23-y) + x]);
             }
             std::cout << std::endl;
