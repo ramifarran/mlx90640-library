@@ -57,10 +57,11 @@ int main(){
         MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
         int temp_in_ints[sizeof(mlx90640To)];
+        printf("Subpage: %d\n", subpage);
         for(int x = 0; x < 32; x++) {
             for(int y = 0; y < 24; y++){
-                temp_in_ints[32 * (23-y) + x] = (int)mlx90640To[32 * (23-y) + x];
-                printf("%+06.2d", temp_in_ints[32 * (23-y) + x]);
+                temp_in_ints[32 * (23-y) + x] = (int)min(mlx90640To[32 * (23-y) + x], 99.99);
+                printf("%+06d", temp_in_ints[32 * (23-y) + x]);
             }
             std::cout << std::endl;
         }
@@ -71,7 +72,6 @@ int main(){
         // auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         // std::this_thread::sleep_for(std::chrono::microseconds(frame_time - elapsed));
         printf("\x1b[33A");
-
     }
     return 0;
 }
