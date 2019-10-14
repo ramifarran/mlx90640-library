@@ -7,7 +7,7 @@
 #include "headers/MLX90640_API.h"
 
 #define MLX_I2C_ADDR 0x33
-
+#define IMAGE_SIZE 768
 #define FPS 4
 #define FRAME_TIME_MICROS (1000000/FPS)
 #define OFFSET_MICROS 850
@@ -30,7 +30,7 @@ int main(){
     MLX90640_SetSubPageRepeat(MLX_I2C_ADDR, 0);
     MLX90640_SetRefreshRate(MLX_I2C_ADDR, 0b010);
     MLX90640_SetChessMode(MLX_I2C_ADDR);
-    //MLX90640_SetSubPage(MLX_I2C_ADDR, 0);
+    MLX90640_SetSubPage(MLX_I2C_ADDR, 0);
     printf("Configured...\n");
 
     paramsMLX90640 mlx90640;
@@ -62,7 +62,7 @@ int main(){
             }
         }
         //wite temperature array to stdout
-        fwrite(&mlx90640To, 4, sizeof(mlx90640To), stdout);
+        fwrite(&mlx90640To, 4, IMAGE_SIZE, stdout);
 
         auto end = std::chrono::system_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
