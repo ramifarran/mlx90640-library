@@ -21,8 +21,8 @@ int main(){
     static float image[768];
     float eTa;
     static uint16_t data[768*sizeof(float)];
-    static long frame_time_micros = FRAME_TIME_MICROS;
-    auto frame_time = std::chrono::microseconds(frame_time_micros + OFFSET_MICROS);
+    // static long frame_time_micros = FRAME_TIME_MICROS;
+    // auto frame_time = std::chrono::microseconds(frame_time_micros + OFFSET_MICROS);
 
     std::fstream fs;
 
@@ -30,7 +30,7 @@ int main(){
     MLX90640_SetSubPageRepeat(MLX_I2C_ADDR, 0);
     MLX90640_SetRefreshRate(MLX_I2C_ADDR, 0b010);
     MLX90640_SetChessMode(MLX_I2C_ADDR);
-    MLX90640_SetSubPage(MLX_I2C_ADDR, 0);
+    // MLX90640_SetSubPage(MLX_I2C_ADDR, 0);
     printf("Configured...\n");
 
     paramsMLX90640 mlx90640;
@@ -44,7 +44,7 @@ int main(){
     int subpage;
     static float mlx90640To[768];
     while (1){
-        auto start = std::chrono::system_clock::now();
+        // auto start = std::chrono::system_clock::now();
         state = !state;
         //printf("State: %d \n", state);
         MLX90640_GetFrameData(MLX_I2C_ADDR, frame);
@@ -56,19 +56,22 @@ int main(){
         MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
         MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
-        int temp_in_ints[sizeof(mlx90640To)];
+        // int temp_in_ints[sizeof(mlx90640To)];
         for(int x = 0; x < 32; x++) {
             for(int y = 0; y < 24; y++){
-                printf("%+06.2d", mlx90640To[32 * (23-y) + x]);
                 temp_in_ints[32 * (23-y) + x] = (int)mlx90640To[32 * (23-y) + x];
+                printf("%+06.2d", temp_in_ints[32 * (23-y) + x]);
             }
+            std::cout << std::endl;
         }
         //wite temperature array to stdout
-        fwrite(&temp_in_ints, 1, IMAGE_SIZE, stdout);
+        // fwrite(&temp_in_ints, 1, IMAGE_SIZE, stdout);
 
-        auto end = std::chrono::system_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-        std::this_thread::sleep_for(std::chrono::microseconds(frame_time - elapsed));
+        // auto end = std::chrono::system_clock::now();
+        // auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        // std::this_thread::sleep_for(std::chrono::microseconds(frame_time - elapsed));
+        printf("\x1b[33A");
+
     }
     return 0;
 }
