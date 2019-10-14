@@ -61,12 +61,12 @@ int main(){
         for(int x = 0; x < 32; x++) {
             for(int y = 0; y < 24; y++){
                 temp_in_ints[32 * (23-y) + x] = (int)std::min(mlx90640To[32 * (23-y) + x], 99.99f);
-                printf("%+06d", temp_in_ints[32 * (23-y) + x]);
+                // printf("%+06d", temp_in_ints[32 * (23-y) + x]);
             }
-            std::cout << std::endl;
+            // std::cout << std::endl;
         }
         //wite temperature array to stdout
-        // fwrite(&temp_in_ints, 1, IMAGE_SIZE, stdout);
+        fwrite(&temp_in_ints, 1, IMAGE_SIZE, stdout);
 
         // auto end = std::chrono::system_clock::now();
         // auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
