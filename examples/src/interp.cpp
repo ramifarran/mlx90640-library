@@ -56,14 +56,14 @@ int main(){
         MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
         MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
-        for(int x = 0; x < 32; x++) {
-            for(int y = 0; y < 24; y++){
-                printf("%f ", mlx90640To[32 * (23-y) + x]);
-            }
-            std::cout << std::endl;
-        }
+        // for(int x = 0; x < 32; x++) {
+        //     for(int y = 0; y < 24; y++){
+        //         printf("%f ", mlx90640To[32 * (23-y) + x]);
+        //     }
+        //     std::cout << std::endl;
+        // }
         //wite temperature array to stdout
-        // fwrite(&mlx90640To, 4, IMAGE_SIZE, stdout);
+        fwrite(&mlx90640To, 4, IMAGE_SIZE, stdout);
 
         // auto end = std::chrono::system_clock::now();
         // auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
