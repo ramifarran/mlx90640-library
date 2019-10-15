@@ -14,7 +14,7 @@
 
 int main(){
     int state = 0;
-    printf("Starting...\n");
+    // printf("Starting...\n");
     static uint16_t eeMLX90640[832];
     float emissivity = 1;
     uint16_t frame[834];
@@ -31,14 +31,14 @@ int main(){
     MLX90640_SetRefreshRate(MLX_I2C_ADDR, 0b010);
     MLX90640_SetChessMode(MLX_I2C_ADDR);
     // MLX90640_SetSubPage(MLX_I2C_ADDR, 0);
-    printf("Configured...\n");
+    // printf("Configured...\n");
 
     paramsMLX90640 mlx90640;
     MLX90640_DumpEE(MLX_I2C_ADDR, eeMLX90640);
     MLX90640_ExtractParameters(eeMLX90640, &mlx90640);
 
     int refresh = MLX90640_GetRefreshRate(MLX_I2C_ADDR);
-    printf("EE Dumped...\n");
+    // printf("EE Dumped...\n");
 
     int frames = 30;
     int subpage;
@@ -56,17 +56,17 @@ int main(){
         MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
         MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
-        int temp_in_ints[sizeof(mlx90640To)];
-        // printf("Subpage: %d\n", subpage);
-        for(int x = 0; x < 32; x++) {
-            for(int y = 0; y < 24; y++){
-                temp_in_ints[32 * (23-y) + x] = (int)std::min(mlx90640To[32 * (23-y) + x], 99.99f);
-                // printf("%+06d", temp_in_ints[32 * (23-y) + x]);
-            }
-            // std::cout << std::endl;
-        }
+        // int temp_in_ints[sizeof(mlx90640To)];
+        // // printf("Subpage: %d\n", subpage);
+        // for(int x = 0; x < 32; x++) {
+        //     for(int y = 0; y < 24; y++){
+        //         temp_in_ints[32 * (23-y) + x] = (int)std::min(mlx90640To[32 * (23-y) + x], 99.99f);
+        //         // printf("%+06d", temp_in_ints[32 * (23-y) + x]);
+        //     }
+        //     // std::cout << std::endl;
+        // }
         //wite temperature array to stdout
-        fwrite(&temp_in_ints, 1, IMAGE_SIZE, stdout);
+        fwrite(&mlx90640To, 4, IMAGE_SIZE, stdout);
 
         // auto end = std::chrono::system_clock::now();
         // auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
