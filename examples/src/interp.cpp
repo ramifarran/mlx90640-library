@@ -58,7 +58,7 @@ int main(){
 
         for(int x = 0; x < 32; x++) {
             for(int y = 0; y < 24; y++){
-                printf("%f", mlx90640To[32 * (23-y) + x]);
+                printf("%f ", mlx90640To[32 * (23-y) + x]);
             }
             std::cout << std::endl;
         }
