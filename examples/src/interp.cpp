@@ -63,7 +63,7 @@ int main(){
             std::cout << std::endl;
         }
         //wite temperature array to stdout
-        fwrite(&mlx90640To, 4, IMAGE_SIZE, stdout);
+        // fwrite(&mlx90640To, 4, IMAGE_SIZE, stdout);
 
         // auto end = std::chrono::system_clock::now();
         // auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
