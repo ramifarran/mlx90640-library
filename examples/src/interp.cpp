@@ -56,15 +56,12 @@ int main(){
         MLX90640_BadPixelsCorrection((&mlx90640)->brokenPixels, mlx90640To, 1, &mlx90640);
         MLX90640_BadPixelsCorrection((&mlx90640)->outlierPixels, mlx90640To, 1, &mlx90640);
 
-        // int temp_in_ints[sizeof(mlx90640To)];
-        // // printf("Subpage: %d\n", subpage);
-        // for(int x = 0; x < 32; x++) {
-        //     for(int y = 0; y < 24; y++){
-        //         temp_in_ints[32 * (23-y) + x] = (int)std::min(mlx90640To[32 * (23-y) + x], 99.99f);
-        //         // printf("%+06d", temp_in_ints[32 * (23-y) + x]);
-        //     }
-        //     // std::cout << std::endl;
-        // }
+        for(int x = 0; x < 32; x++) {
+            for(int y = 0; y < 24; y++){
+                printf(mlx90640To[32 * (23-y) + x]);
+            }
+            std::cout << std::endl;
+        }
         //wite temperature array to stdout
         fwrite(&mlx90640To, 4, IMAGE_SIZE, stdout);
 
